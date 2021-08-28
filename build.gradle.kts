@@ -18,11 +18,12 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework.boot:spring-boot-starter:2.5.4")
+    implementation("org.springframework.boot:spring-boot-starter-web:2.5.4")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    developmentOnly("org.springframework.boot:spring-boot-devtools:2.5.4")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.4")
 }
 
 tasks.withType<KotlinCompile> {
