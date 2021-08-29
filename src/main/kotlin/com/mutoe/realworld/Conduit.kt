@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class KotlinSpringRealworld
+class Conduit
 
 fun main(args: Array<String>) {
-    runApplication<KotlinSpringRealworld>(*args)
+    runApplication<Conduit>(*args)
 }
