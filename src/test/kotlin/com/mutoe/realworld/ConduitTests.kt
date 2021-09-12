@@ -9,5 +9,4 @@ class ConduitTests {
     @Test
     fun contextLoads() {
     }
-
 }

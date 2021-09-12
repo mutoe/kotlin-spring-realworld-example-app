@@ -1,4 +1,4 @@
-package com.mutoe.realworld.common.adapter.inbound
+package com.mutoe.realworld.adapter.inbound.health
 
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
