@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "conduit.jwt.secret",
+      "type": "java.lang.String",
+      "description": "Description for conduit.jwt.secret."
+    },
+    {
+      "name": "conduit.jwt.expiration",
+      "type": "java.lang.Integer",
+      "description": "Description for conduit.jwt.expiration."
+    }
+  ]
+}

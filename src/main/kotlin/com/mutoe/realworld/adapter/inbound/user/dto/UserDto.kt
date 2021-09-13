@@ -7,7 +7,7 @@ data class UserInfo(
     val email: String,
     val username: String,
     val bio: String?,
-    val avatar: String?,
+    val image: String?,
     val token: String,
 )
 
@@ -17,7 +17,7 @@ data class UserDto(
 ) {
     companion object {
         fun User.toDto(token: String) = UserDto(
-            UserInfo(email, username, bio, avatar, token)
+            UserInfo(email, username, bio, image, token)
         )
     }
 }

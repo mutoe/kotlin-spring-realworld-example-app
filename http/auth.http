@@ -1,9 +1,89 @@
+###
+
 # Register
-POST {{host}}/user/register
+POST {{host}}/users
 Content-Type: application/json
 
 {
-  "username": "foobar",
-  "password": "12345678",
-  "email": "foo@bar.com"
+  "user": {
+    "username": "foobar",
+    "password": "12345678",
+    "email": "foo@bar.com"
+  }
 }
+
+> {%
+client.test("Register", function() {
+  client.assert(response.status === 200, "response status is not 200")
+  client.assert(response.body.user, "user not exist")
+  var user = response.body.user
+  client.assert(user.username === "foobar", "username not match")
+  client.assert(user.email === "foo@bar.com", "email not match")
+  client.assert(user.token, "token not exist")
+})
+%}
+
+###
+
+# Re-register
+POST {{host}}/users
+Content-Type: application/json
+
+{
+  "user": {
+    "username": "foobar",
+    "password": "12345678",
+    "email": "foo@bar.com"
+  }
+}
+
+> {%
+client.test("Re-register", function() {
+  client.assert(response.status === 400, "response status is not 400")
+  client.assert(response.body.message === "Email is existed", "response message not match")
+})
+%}
+
+###
+
+# Login
+POST {{host}}/users/login
+Content-Type: application/json
+
+{
+  "user": {
+    "email": "foo@bar.com",
+    "password": "12345678"
+  }
+}
+
+> {%
+client.test("Login", function() {
+  client.assert(response.status === 200, "response status is not 200")
+  client.assert(response.body.user, "user not exist")
+  var user = response.body.user
+  client.assert(user.username === "foobar", "username not match")
+  client.assert(user.email === "foo@bar.com", "email not match")
+  client.assert(user.token, "token not exist")
+})
+%}
+
+###
+
+# Login with incorrect email
+POST {{host}}/users/login
+Content-Type: application/json
+
+{
+  "user": {
+    "email": "not-existed@bar.com",
+    "password": "12345678"
+  }
+}
+
+> {%
+client.test("Login with incorrect email", function() {
+  client.assert(response.status === 400, "response status is not 400")
+  client.assert(response.body.message === "Email is not exist", "error message not match")
+})
+%}

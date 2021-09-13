@@ -1,10 +1,18 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.6.0-SNAPSHOT"
+    val kotlin = "1.5.21"
+    val springBoot = "2.6.0-SNAPSHOT"
+    val flyway = "7.14.1"
+
+    kotlin("jvm") version kotlin
+    kotlin("plugin.spring") version kotlin
+    kotlin("plugin.jpa") version kotlin
+
+    id("org.springframework.boot") version springBoot
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("jvm") version "1.5.21"
-    kotlin("plugin.spring") version "1.5.21"
+
+    id("org.flywaydb.flyway") version flyway
 }
 
 group = "com.mutoe"
@@ -17,13 +25,35 @@ repositories {
     maven { url = uri("https://repo.spring.io/snapshot") }
 }
 
+allOpen {
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.MappedSuperclass")
+    annotation("javax.persistence.Embeddable")
+}
+
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter:2.5.4")
-    implementation("org.springframework.boot:spring-boot-starter-web:2.5.4")
+    val springBoot = "2.6.0-SNAPSHOT"
+    val flyway = "7.14.1"
+
+    implementation("org.springframework.boot:spring-boot-starter:$springBoot")
+    implementation("org.springframework.boot:spring-boot-starter-web:$springBoot")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    developmentOnly("org.springframework.boot:spring-boot-devtools:2.5.4")
-    testImplementation("org.springframework.boot:spring-boot-starter-test:2.5.4")
+    developmentOnly("org.springframework.boot:spring-boot-devtools:$springBoot")
+
+    // security
+    implementation("org.springframework.boot:spring-boot-starter-security:$springBoot")
+    implementation("io.jsonwebtoken:jjwt-api:0.11.2")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
+
+    // persistence
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:$springBoot")
+    implementation("org.flywaydb:flyway-core:$flyway")
+    implementation("org.postgresql:postgresql:42.2.23.jre7")
+
+    // test
+    testImplementation("org.springframework.boot:spring-boot-starter-test:$springBoot")
 }
 
 tasks.withType<KotlinCompile> {
