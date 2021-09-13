@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse
 class JwtAuthenticationFilter(
     private val jwtTokenUtil: JwtTokenUtil,
 ) : OncePerRequestFilter() {
-    private val tokenHeader = "Authentication"
+    private val tokenHeader = "authorization"
     private val tokenPrefix = "Bearer "
 
     override fun doFilterInternal(

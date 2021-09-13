@@ -20,6 +20,8 @@ client.test("Register", function() {
   client.assert(user.username === "foobar", "username not match")
   client.assert(user.email === "foo@bar.com", "email not match")
   client.assert(user.token, "token not exist")
+
+  client.global.set("token", user.token)
 })
 %}
 
@@ -65,6 +67,8 @@ client.test("Login", function() {
   client.assert(user.username === "foobar", "username not match")
   client.assert(user.email === "foo@bar.com", "email not match")
   client.assert(user.token, "token not exist")
+
+  client.global.set("token", user.token)
 })
 %}
 
@@ -85,5 +89,24 @@ Content-Type: application/json
 client.test("Login with incorrect email", function() {
   client.assert(response.status === 400, "response status is not 400")
   client.assert(response.body.message === "Email is not exist", "error message not match")
+})
+%}
+
+###
+
+# Get current user info
+GET {{host}}/user
+Authorization: Bearer {{token}}
+
+> {%
+client.test("Get current user info", function() {
+  client.assert(!!client.global.get("token"), "should register or login first")
+  client.assert(response.status === 200, "response status is not 200")
+
+  client.assert(response.body.user, "user not exist")
+  var user = response.body.user
+  client.assert(user.username === "foobar", "username not match")
+  client.assert(user.email === "foo@bar.com", "email not match")
+  client.assert(user.token, "token not exist")
 })
 %}

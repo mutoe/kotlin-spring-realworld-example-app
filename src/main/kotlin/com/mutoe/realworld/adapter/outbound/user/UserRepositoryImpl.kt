@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component
 class UserRepositoryImpl(
     private val dao: UserDao,
 ) : UserRepository {
+    override fun get(id: Int): User {
+        return dao.getById(id).toDomain()
+    }
 
     override fun find(email: String): User? {
         return dao.findByEmail(email)?.toDomain()
